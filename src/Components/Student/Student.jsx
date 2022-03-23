@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Container, Row, Col, Button, Table, Card } from 'react-bootstrap';
 import StudentContext from '../../Context/StudentContext';
-import StudentModal from './StudentModal/StudentModal';
+import StudentModal from './StudentAddModal/StudentAddModal';
 
 
 const Student = () => {
 
-  const [ modal, handleModalShow, handleModalHide ] = useContext(StudentContext);
+  const [addModal, editModal, viewModal, handleAddModalShow, handleAddModalHide, student, handleFormData, handleFormSubmit, allStudent, handleStudentView, singleStu, handleStudentDelete, handleStudentEdit, handleViewModalHide, handleEditModalHide ] = useContext(StudentContext);
 
 
 
@@ -15,14 +15,14 @@ const Student = () => {
     
     <Container>
 
-      <StudentModal></StudentModal>
+      
 
         <Row className='mt-5'>
           <Col md={10} className='m-auto'>
             <Card>
               <Card.Header className='d-flex justify-content-between'>
                 <h4 className='text-center'>All Student </h4>
-                <Button variant='info' onClick={ handleModalShow }>Add New Student</Button>
+                <Button variant='info' onClick={ handleAddModalShow }>Add New Student</Button>
               </Card.Header>
               <Card.Body className='student-table shadow'>
                   <Table>
@@ -37,19 +37,25 @@ const Student = () => {
                     </thead>
                     <tbody>
 
-                    <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                              {/* <Button variant='info'> <FontAwesomeIcon icon={ faEye }></FontAwesomeIcon> </Button>&nbsp;
+                          {
+                            allStudent.map((data, index) => 
+                            
+                              <tr>
+                                <td>{ index + 1 }</td>
+                                <td>{ data.name }</td>
+                                <td>{ data.email }</td>
+                                <td><img style={{ width : '40px' }} src="//www.pngitem.com/pimgs/m/4-49754_our-team-single-hd-png-download.png" alt="" /></td>
+                                <td>
+                                  <Button onClick={ () => handleStudentView(data.id) } variant='info' className='btn-sm'>View</Button>&nbsp;
 
-                              <Button  variant='warning'> <FontAwesomeIcon icon={ faEdit }></FontAwesomeIcon> </Button>&nbsp;
+                                  <Button onClick={ () => handleStudentEdit(data.id) }  variant='warning' className='btn-sm'>Edit</Button>&nbsp;
 
-                              <Button variant='danger'> <FontAwesomeIcon icon={ faTrash }></FontAwesomeIcon> </Button> */}
-                            </td>
-                          </tr>
+                                  <Button onClick={ () => handleStudentDelete(data.id) }  variant='danger' className='btn-sm'>Delete</Button>
+                                </td>
+                              </tr>
+
+                            )
+                          }
                       
                     
 
